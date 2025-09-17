@@ -1,0 +1,30 @@
+name: Golang Servers
+on:
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./GameServer
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        
+      - uses: actions/setup-go@v6
+        with:
+          go-version: 'stable'
+          
+      - name: Install dependencies
+        run: go get .
+        
+      - name: Build
+        run: go build
+        
+      - name: Test with the Go CLI
+        run: go test
+        
+      
