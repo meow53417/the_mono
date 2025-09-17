@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "./Block Game"
+        working-directory: ./BlockGame
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
