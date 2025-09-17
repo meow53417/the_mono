@@ -11,7 +11,7 @@ jobs:
       - name: Run tests
         uses: game-ci/unity-test-runner@v4
         with:
-          projectPath: "/Block Game"
+          projectPath: "./Block Game"
       
       - name: Build project
         uses: game-ci/unity-builder@v4
