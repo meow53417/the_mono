@@ -4,34 +4,39 @@ on:
 jobs:
   build-unity:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./BlockGame
+    env: 
+      working-directory: ./BlockGame
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
+        with:
+          lfs: true
+
       - uses: actions/cache@v3
         with:
-          path: Library
+          path: ${{ env.working-directory }}/Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
-        
+
       - name: Run tests
         uses: game-ci/unity-test-runner@v4
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-      
+        with:
+          projectPath: ${{ env.working-directory }}
+
       - name: Build project
         uses: game-ci/unity-builder@v4
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        
+        with:
+          projectPath: ${{ env.working-directory }}
+
       - uses: actions/upload-artifact@v4
         with:
           name: Build
