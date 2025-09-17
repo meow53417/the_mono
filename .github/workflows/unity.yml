@@ -1,6 +1,6 @@
 name: Unity Game
 on:
-  push:
+  workflow_dispatch:
 jobs:
   build-unity:
     runs-on: ubuntu-latest
